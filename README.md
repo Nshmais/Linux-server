@@ -20,30 +20,31 @@ Locate the SSH key you created for the grader user.
 
 
 ## Documentation
-To add a new user to VM, just substitute the actual username with the username (**username is placeholder in the code**) 
+To add a new user to VM, just substitute the actual username with the username (**username is placeholder in the code**): 
 ```
 $ sudo adduser username
 ```
-To get info about the user
+To get info about the user:
 ```
 $ finger username
 ```
-To login to VM for the user (username/ localhost IP address/ port/ key)
+To login to VM for the user (username/ localhost IP address/ port/ key):
 ```
 $ssh username@127.0.0.1 -p 2222 -i ~/.ssh/key
 ```
 
 ## VM Up to Date
+in order to get newest versions of packages we have to preform the following tasks in order:
 
-To downloads the package lists from the repositories and "updates" them to get information on the newest versions of packages and their dependencies
+1. To downloads the package lists from the repositories and "updates" them to get information on the newest versions of packages and their dependencies:
 ``` 
 $ sudo apt-get update
 ```
-To fetch new versions of packages existing on the machine if APT knows about these new versions
+2. To fetch new versions of packages existing on the machine if APT knows about these new versions:
 ``` 
 $ sudo apt-get upgrade
 ```
-To remove leftover dependencies of packages you no longer have
+3. To remove leftover dependencies of packages you no longer have:
 ``` 
 $ sudo apt-get autoremove
 ```
