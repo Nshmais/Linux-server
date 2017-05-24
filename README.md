@@ -22,7 +22,7 @@ Locate the SSH key you created for the grader user.~~
 
 
 ## Update or Installed Packages
-in order to get newest versions of packages we have to preform the following tasks in order:
+In order to get newest versions of packages we have to preform the following tasks in order:
 
 1. `$ sudo apt-get update` to downloads the package lists from the repositories and "updates" them to get information on the newest versions of packages and their dependencies.
 2. `$ sudo apt-get upgrade` to fetch new versions of packages existing on the machine if APT knows about these new versions.
@@ -30,22 +30,10 @@ in order to get newest versions of packages we have to preform the following tas
 4. `$ sudo apt-get install packagename` to download any other packages.
 
 ## New User Configuration
-To add a new user to VM, just substitute the actual username with the username (**username is placeholder in the code**): 
-```
-$ sudo adduser username
-```
-To get info about the user:
-```
-$ finger username
-```
-Add the user to superuser (sudo):
-```
-usermod -aG sudo grader
-```
-To login to VM for the user (username/ localhost IP address/ port/ key):
-```
-$ssh username@127.0.0.1 -p 2222 -i ~/.ssh/key
-```
+- `$ sudo adduser username` to add a new user to VM, just substitute the actual username with the username (**username is placeholder in the code**).
+- `$ finger username` to get info about the user.
+- `$ usermod -aG sudo grader` add the user to superuser (sudo).
+- `$ssh username@127.0.0.1 -p 2222 -i ~/.ssh/key` to login to VM for the user (username/ localhost IP address/ port/ key).
 
 ## Timezone UTC
 
