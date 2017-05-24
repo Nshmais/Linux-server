@@ -77,7 +77,7 @@ To check the status of the firewall, use:
 ```
 sudo ufw status
 ```
-the firewall should be active.
+The firewall should be active. For more info [click here](https://help.ubuntu.com/community/UFW)
 
 ## New User Configuration
 - `$ sudo adduser username` to add a new user to VM, just substitute the actual username with the username (**username is placeholder in the code**).
