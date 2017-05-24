@@ -45,7 +45,39 @@ Will now change the command to login to the server:
 $ssh username@127.0.0.1 -p 2200 -i ~/.ssh/key
 ```
 ## Configure the Uncomplicated Firewall (UFW) 
-
+By default, block all incoming connections on all ports:
+```
+sudo ufw default deny incoming
+```
+Allow outgoing connection on all ports:
+```
+sudo ufw default allow outgoing
+```
+Allow incoming connection for SSH on port 2200:
+```
+sudo ufw allow 2200/tcp
+```
+Allow incoming connections for HTTP on port 80:
+```
+sudo ufw allow www
+```
+Allow incoming connection for NTP on port 123:
+```
+sudo ufw allow ntp
+```
+To check the rules that have been added before enabling the firewall use:
+```
+sudo ufw show added
+```
+To enable the firewall, use:
+```
+sudo ufw enable
+```
+To check the status of the firewall, use:
+```
+sudo ufw status
+```
+the firewall should be active.
 
 ## New User Configuration
 - `$ sudo adduser username` to add a new user to VM, just substitute the actual username with the username (**username is placeholder in the code**).
