@@ -48,6 +48,10 @@ $ sudo apt-get upgrade
 ``` 
 $ sudo apt-get autoremove
 ```
+4. To download any other packages :
+``` 
+$ sudo apt-get install packagename
+```
 
 
 ## License
