@@ -29,20 +29,7 @@ In order to get newest versions of packages we have to preform the following tas
 3. `$ sudo apt-get autoremove` to remove leftover dependencies of packages you no longer have.
 4. `$ sudo apt-get install packagename` to download any other packages.
 
-## New User Configuration
-- `$ sudo adduser username` to add a new user to VM, just substitute the actual username with the username (**username is placeholder in the code**).
-- `$ finger username` to get info about the user.
-- `$ usermod -aG sudo grader` add the user to superuser (sudo).
-- `$ssh username@127.0.0.1 -p 2222 -i ~/.ssh/key` to login to VM for the user (username/ localhost IP address/ port/ key).
-
-## Timezone UTC
-
-To check the current timezone use the following command `$ date`. In case it's not UTC, here is the command to do so:
-```
-$ sudo timedatectl set-timezone UTC
-```
 ## Change the SSH port from 22 to 2200
-
 Edit the file `$ nano /etc/ssh/sshd_config` and change **Port 22** to **Port 2200**
 ```diff
 # what ports, IPs and protocols we listen for
@@ -57,7 +44,23 @@ Will now change the command to login to the server:
 ```
 $ssh username@127.0.0.1 -p 2200 -i ~/.ssh/key
 ```
-## Install Apache2 to Serve 
+## Configure the Uncomplicated Firewall (UFW) 
+
+
+## New User Configuration
+- `$ sudo adduser username` to add a new user to VM, just substitute the actual username with the username (**username is placeholder in the code**).
+- `$ finger username` to get info about the user.
+- `$ usermod -aG sudo grader` add the user to superuser (sudo).
+- `$ssh username@127.0.0.1 -p 2222 -i ~/.ssh/key` to login to VM for the user (username/ localhost IP address/ port/ key).
+
+## Timezone UTC
+
+To check the current timezone use the following command `$ date`. In case it's not UTC, here is the command to do so:
+```
+$ sudo timedatectl set-timezone UTC
+```
+
+## Install and configure Apache to serve a Python mod_wsgi application
 
 Install Apache:
 ```
@@ -70,7 +73,6 @@ sudo apt-get install libapache2-mod-wsgi
 ~~Edit the `nano /etc/apache2/sites-enabled/000-default.conf` file, add the following line at the end of the `<VirtualHost *:80>` block, right before the closing `</VirtualHost>` line: `WSGIScriptAlias / /var/www/html/myapp.wsgi`~~
 
 ## Install and configure PostgreSQL
-
 Install PostgreSQL with:
 ```
 sudo apt-get install postgresql postgresql-contrib
@@ -88,7 +90,9 @@ Create an empty database called catalog with:
 sudo -u postgres createdb -O catalog catalog
 ```
 For more info [Ubuntu documentation PostgreSQL](https://help.ubuntu.com/community/PostgreSQL)
- 
-## License
 
+## Install Git
+`sudo apt-get install git`
+
+## License
 This `Linux-server` project is a released under the [MIT License](https://opensource.org/licenses/MIT)
