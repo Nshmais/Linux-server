@@ -84,13 +84,14 @@ The firewall should be active. For more info [click here](https://help.ubuntu.co
 - `$ finger username` to get info about the user.
 - `$ usermod -aG sudo grader` add the user to superuser (sudo).
 - `$ssh username@127.0.0.1 -p 2222 -i ~/.ssh/key` to login to VM for the user (username/ localhost IP address/ port/ key).
+- For more info [click here](https://www.digitalocean.com/community/tutorials/how-to-add-and-delete-users-on-ubuntu-16-04)
 
 ## Timezone UTC
-
 To check the current timezone use the following command `$ date`. In case it's not UTC, here is the command to do so:
 ```
 $ sudo timedatectl set-timezone UTC
 ```
+For more info [click here](https://www.digitalocean.com/community/tutorials/how-to-set-up-timezone-and-ntp-synchronization-on-ubuntu-14-04-quickstart)
 
 ## Install and configure Apache to serve a Python mod_wsgi application
 
