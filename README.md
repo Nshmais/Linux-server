@@ -43,8 +43,9 @@ $ sudo timedatectl set-timezone UTC
 ```
 ## Change the SSH port from 22 to 2200
 
-Edit the file `$ nano /etc/ssh/sshd_config` and change **# what ports, IPs and protocols we listen for Port 22** to **Port 2200**
+Edit the file `$ nano /etc/ssh/sshd_config` and change **Port 22** to **Port 2200**
 ```diff
+# what ports, IPs and protocols we listen for
 - Port 22
 + Port 2200
 ```
