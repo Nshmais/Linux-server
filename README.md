@@ -110,7 +110,7 @@ Install PostgreSQL with:
 ```
 sudo apt-get install postgresql postgresql-contrib
 ```
-To ensure that remote connections to PostgreSQL are not allowed, I checked that the configuration file /etc/postgresql/9.3/main/pg_hba.conf only allowed connections from the local host addresses 127.0.0.1 for IPv4 and ::1 for IPv6.
+To ensure that remote connections to PostgreSQL are not allowed, I checked that the configuration file `/etc/postgresql/9.3/main/pg_hba.conf` only allowed connections from the local host addresses `127.0.0.1` for `IPv4` and `::1` for `IPv6`.
 
 Create a PostgreSQL user called catalog with:
 ```
