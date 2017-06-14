@@ -126,6 +126,19 @@ For more info [Ubuntu documentation PostgreSQL](https://help.ubuntu.com/communit
 
 ## Install Git
 `sudo apt-get install git`
+To clone Restaurants_Catalog project from my github
+`git clone https://github.com/Nshmais/Restaurants_Catalog`
+
+## Install Flask, SQLAlchemy, etc
+Issue the following commands:
+```
+sudo apt-get install python-psycopg2 python-flask
+sudo apt-get install python-sqlalchemy python-pip
+sudo pip install oauth2client
+sudo pip install requests
+sudo pip install httplib2
+sudo pip install flask-seasurf
+```
 
 ## License
 This `Linux-server` project is a released under the [MIT License](https://opensource.org/licenses/MIT)
