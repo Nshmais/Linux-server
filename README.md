@@ -2,11 +2,11 @@
 <img src="Linux.png" width="50">  Configure Linux Server the turn it to Web Application Server using Apache2
 
 ## Project Overview
-Taking the baseline installation of a Linux server and prepare it to host your web applications. Secure the server from a number of attack vectors, installing and configuring a database server, and deploy web applications onto it. Learn how to access, secure, and perform the initial configuration of a bare-bones Linux server. learn how to install and configure a web and database server and actually host a web application.
+Taking the baseline installation of a Linux server and prepare it to a web applications. Secure the server from a number of attack vectors, installing and configuring a database server, and deploy web applications onto it. Access, secure, and perform the initial configuration of a bare-bones Linux server. Install and configure a web and database server and host a web application.
 
 ## Server Details
 
-IP address: 
+IP address from Amazon Lightsail: 
 
 SSH port: 2200
 
