@@ -1,4 +1,4 @@
-#  Linux-server
+#  Linux Server Configuration
 <img src="Linux.png" width="50">  Configure Linux Server the turn it to Web Application Server using Apache2
 
 ## Project Overview
@@ -44,6 +44,7 @@ Will now change the command to login to the server:
 ```
 $ssh username@127.0.0.1 -p 2200 -i ~/.ssh/key
 ```
+
 ## Configure the Uncomplicated Firewall (UFW) 
 By default, block all incoming connections on all ports:
 ```
@@ -139,6 +140,32 @@ sudo pip install requests
 sudo pip install httplib2
 sudo pip install flask-seasurf
 ```
+## Amazon Lightsail
+##### 1. Log in!
+  First, log in to Lightsail. If you don't already have an Amazon Web Services account, you'll be prompted to create one.
+
+##### 2. Create an instance.
+  Once you're logged in, Lightsail will give you a friendly message with a robot on it, prompting you to create an instance. A Lightsail instance is a Linux server running on a virtual machine inside an Amazon datacenter.
+
+##### 3. Choose an instance image: Ubuntu
+  Lightsail supports a lot of different instance types. An instance image is a particular software setup, including an operating system and optionally built-in applications. For this project, you'll want a plain Ubuntu Linux image. There are two settings to make here:
+  A. First, choose "OS Only" (rather than "Apps + OS"). 
+  B. Second, choose Ubuntu as the operating system.
+
+##### 4. Choose your instance plan.
+  The instance plan controls how powerful of a server you get. It also controls how much money they want to charge you. For this project, $5 (first month free) instance is just fine.
+  
+##### 5. Give your instance a hostname.
+  Every instance needs a unique hostname. You can use any name you like, as long as it doesn't have spaces or unusual characters in it. Your instance's name will be visible to you and to the project reviewer.
+
+##### 6. Wait for it to start up.
+  It may take a few seconds/minutes for your instance to start up.
+
+##### 7. Running instance
+  Once your instance has started up, you can log into it with SSH from computer.`ssh Ubuntu@()ip_address` you can leave the port part off if its defult 22 or if you change it you have to mention it `ssh Ubuntu@()ip_address -p port_number`
+
+The public IP address of the instance is displayed along with its name. In the above picture it's 54.84.49.254. The DNS name of this instance is ec2-54-84-49-254.compute-1.amazonaws.com.
+
 
 ## License
 This `Linux-server` project is a released under the [MIT License](https://opensource.org/licenses/MIT)
