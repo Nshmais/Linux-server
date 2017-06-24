@@ -37,38 +37,21 @@ $ssh username@127.0.0.1 -p 2200 -i ~/.ssh/key
 ```
 
 ## Configure the Uncomplicated Firewall (UFW) 
-By default, block all incoming connections on all ports:
-```
-sudo ufw default deny incoming
-```
+By default, block all incoming connections on all ports:`sudo ufw default deny incoming`
 Allow outgoing connection on all ports:
-```
-sudo ufw default allow outgoing
-```
+`sudo ufw default allow outgoing`
 Allow incoming connection for SSH on port 2200:
-```
-sudo ufw allow 2200/tcp
-```
+`sudo ufw allow 2200/tcp`
 Allow incoming connections for HTTP on port 80:
-```
-sudo ufw allow www
-```
+`sudo ufw allow www`
 Allow incoming connection for NTP on port 123:
-```
-sudo ufw allow ntp
-```
+`sudo ufw allow ntp`
 To check the rules that have been added before enabling the firewall use:
-```
-sudo ufw show added
-```
+`sudo ufw show added`
 To enable the firewall, use:
-```
-sudo ufw enable
-```
+`sudo ufw enable`
 To check the status of the firewall, use:
-```
-sudo ufw status
-```
+`sudo ufw status`
 The firewall should be active. For more info [click here](https://help.ubuntu.com/community/UFW)
 
 ## New User Configuration
@@ -95,7 +78,6 @@ Install the libapache2-mod-wsgi package:
 ```
 sudo apt-get install libapache2-mod-wsgi
 ```
-~~Edit the `nano /etc/apache2/sites-enabled/000-default.conf` file, add the following line at the end of the `<VirtualHost *:80>` block, right before the closing `</VirtualHost>` line: `WSGIScriptAlias / /var/www/html/myapp.wsgi`~~
 
 ## Install and configure PostgreSQL
 Install PostgreSQL with:
