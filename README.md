@@ -59,6 +59,10 @@ To check the current timezone use the following command `$ date`. In case it's n
 ```
 $ sudo timedatectl set-timezone UTC
 ```
+or open time configuration dialog and set it to UTC with:
+```
+sudo dpkg-reconfigure tzdata
+```
 For more info [click here](https://www.digitalocean.com/community/tutorials/how-to-set-up-timezone-and-ntp-synchronization-on-ubuntu-14-04-quickstart)
 
 ## Install and configure Apache to serve a Python mod_wsgi application
