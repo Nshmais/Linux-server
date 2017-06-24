@@ -6,20 +6,11 @@ Taking the baseline installation of a Linux server and prepare it to a web appli
 
 ## Server Details
 
-IP address from Amazon Lightsail: 
+IP address from Amazon EC2: 13.59.231.249
 
 SSH port: 2200
 
-URL: 
-
-
-~~README.md file include all of the following:
-i. The IP address and SSH port so your server can be accessed by the reviewer.
-ii. The complete URL to your hosted web application.
-iii. A summary of software you installed and configuration changes made.
-iv. A list of any third-party resources you made use of to complete this project.
-Locate the SSH key you created for the grader user.~~
-
+URL: http://ec2-13-59-231-249.us-east-2.compute.amazonaws.com     
 
 ## Update or Installed Packages
 In order to get newest versions of packages we have to preform the following tasks in order:
