@@ -12,7 +12,9 @@ SSH port: 2200
 
 URL: http://ec2-13-59-231-249.us-east-2.compute.amazonaws.com     
 
-## Update or Installed Packages
+##Step by step process
+
+### 1.  Update or Installed Packages
 In order to get newest versions of packages we have to preform the following tasks in order:
 
 1. `$ sudo apt-get update` to downloads the package lists from the repositories and "updates" them to get information on the newest versions of packages and their dependencies.
@@ -20,7 +22,7 @@ In order to get newest versions of packages we have to preform the following tas
 3. `$ sudo apt-get autoremove` to remove leftover dependencies of packages you no longer have.
 4. `$ sudo apt-get install packagename` to download any other packages.
 
-## Change the SSH port from 22 to 2200
+### 2. Change the SSH port from 22 to 2200
 Edit the file `$ nano /etc/ssh/sshd_config` and change **Port 22** to **Port 2200**
 ```diff
 # what ports, IPs and protocols we listen for
@@ -33,28 +35,28 @@ $ sudo service ssh restart
 ```
 Will now change the command to login to the server:
 ```
-$ssh username@127.0.0.1 -p 2200 -i ~/.ssh/key
+$ ssh username@127.0.0.1 -p 2200 -i ~/.ssh/key
 ```
 
-## Configure the Uncomplicated Firewall (UFW) 
-- By default, block all incoming connections on all ports: `sudo ufw default deny incoming`
-- Allow outgoing connection on all ports: `sudo ufw default allow outgoing`
-- Allow incoming connection for SSH on port 2200: `sudo ufw allow 2200/tcp`
-- Allow incoming connections for HTTP on port 80: `sudo ufw allow www`
-- Allow incoming connection for NTP on port 123: `sudo ufw allow ntp`
-- To check the rules that have been added before enabling the firewall use: `sudo ufw show added`
-- To enable the firewall, use: `sudo ufw enable`
-- To check the status of the firewall, use: `sudo ufw status`
+### 3. Configure the Uncomplicated Firewall (UFW) 
+- By default, block all incoming connections on all ports: `$ sudo ufw default deny incoming`
+- Allow outgoing connection on all ports: `$ sudo ufw default allow outgoing`
+- Allow incoming connection for SSH on port 2200: `$ sudo ufw allow 2200/tcp`
+- Allow incoming connections for HTTP on port 80: `$ sudo ufw allow www`
+- Allow incoming connection for NTP on port 123: `$ sudo ufw allow ntp`
+- To check the rules that have been added before enabling the firewall use: `$ sudo ufw show added`
+- To enable the firewall, use: `$ sudo ufw enable`
+- To check the status of the firewall, use: `$ sudo ufw status`
 - The firewall should be active. For more info [click here](https://help.ubuntu.com/community/UFW)
 
-## New User Configuration
+### 4. New User Configuration
 - `$ sudo adduser username` to add a new user to VM, just substitute the actual username with the username (**username is placeholder in the code**).
 - `$ finger username` to get info about the user.
 - `$ usermod -aG sudo grader` add the user to superuser (sudo).
 - `$ssh username@127.0.0.1 -p 2222 -i ~/.ssh/key` to login to VM for the user (username/ localhost IP address/ port/ key).
 - For more info [click here](https://www.digitalocean.com/community/tutorials/how-to-add-and-delete-users-on-ubuntu-16-04)
 
-## Timezone UTC
+###5. Timezone UTC
 To check the current timezone use the following command `$ date`. In case it's not UTC, here is the command to do so:
 ```
 $ sudo timedatectl set-timezone UTC
@@ -65,7 +67,7 @@ sudo dpkg-reconfigure tzdata
 ```
 For more info [click here](https://www.digitalocean.com/community/tutorials/how-to-set-up-timezone-and-ntp-synchronization-on-ubuntu-14-04-quickstart)
 
-## Install and configure Apache to serve a Python mod_wsgi application
+### 6. Install and configure Apache to serve a Python mod_wsgi application
 
 Install Apache:
 ```
@@ -76,7 +78,7 @@ Install the libapache2-mod-wsgi package:
 sudo apt-get install libapache2-mod-wsgi
 ```
 
-## Install and configure PostgreSQL
+### 7. Install and configure PostgreSQL
 Install PostgreSQL with:
 ```
 sudo apt-get install postgresql postgresql-contrib
@@ -95,12 +97,12 @@ sudo -u postgres createdb -O catalog catalog
 ```
 For more info [Ubuntu documentation PostgreSQL](https://help.ubuntu.com/community/PostgreSQL)
 
-## Install Git
+### 8. Install Git
 `sudo apt-get install git`
 To clone Restaurants_Catalog project from my github
 `git clone https://github.com/Nshmais/Restaurants_Catalog`
 
-## Install Flask, SQLAlchemy, etc
+### 9. Install Flask, SQLAlchemy, etc
 Issue the following commands:
 ```
 sudo apt-get install python-psycopg2 python-flask
