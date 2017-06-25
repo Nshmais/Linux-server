@@ -12,7 +12,8 @@ SSH port: 2200
 
 URL: http://ec2-13-59-231-249.us-east-2.compute.amazonaws.com     
 
-## Step by step process
+## 🤖 Step by step process
+Create an instance in Amazon EC2. Log into Amazon EC2 instance with your IP adress and key if setup `$ ssh ubuntu@13.59.231.249`, now follow these steps to deploy your app to the server.
 
 ### 1.  Update or Installed Packages
 In order to get newest versions of packages we have to preform the following tasks in order:
@@ -43,12 +44,11 @@ In order to get newest versions of packages we have to preform the following tas
 8. To check the status of the firewall, use: `$ sudo ufw status`
 - The firewall should be active. For more info [click here](https://help.ubuntu.com/community/UFW)
 
-### 4. New User Configuration
-1. Log into Amazon EC2 instance: `$ ssh ubuntu@13.59.231.249`
-2. Add a new user **grader**: `$ sudo adduser grader`
-3. Create a new file under the suoders directory: `$ sudo nano /etc/sudoers.d/grader` 
-4. Fill that file with the following line of text: `grader ALL=(ALL:ALL) ALL` and save it.
-5. to get info about the user `$ finger username` 
+### 4. New User Configuration (grader)
+1. Add a new user **grader**: `$ sudo adduser grader`
+2. Create a new file under the suoders directory: `$ sudo nano /etc/sudoers.d/grader` 
+3. Fill that file with the following line of text: `grader ALL=(ALL:ALL) ALL` and save it.
+4. to get info about the user `$ finger username` 
 - For more info [click here](https://www.digitalocean.com/community/tutorials/how-to-add-and-delete-users-on-ubuntu-16-04)
 
 #### key authentication for grader user
@@ -139,7 +139,7 @@ To check the current timezone use the following command `$ date`. In case it's n
 1. Install some necessary Python packages for working with PostgreSQL: `$ sudo apt-get install libpq-dev python-dev`.
 2. Install PostgreSQL: `$ sudo apt-get install postgresql postgresql-contrib`.
 3. Postgres is automatically creating a new user during its installation, whose name is 'postgres'. That is a tusted user who can access the database software. So let's change the user with: `$ sudo su - postgres`, then connect to the database system with `$ psql`.
-4. Create a new user called 'catalog' with his password: `# CREATE USER catalog WITH PASSWORD 'sillypassword';`.
+4. Create a new user called 'catalog' with his password: `# CREATE USER catalog WITH PASSWORD 'udacitypassword';`.
 5. Give *catalog* user the CREATEDB capability: `# ALTER USER catalog CREATEDB;`.
 6. Create the 'catalog' database owned by *catalog* user: `# CREATE DATABASE catalog WITH OWNER catalog;`.
 7. Connect to the database: `# \c catalog`.
@@ -148,7 +148,7 @@ To check the current timezone use the following command `$ date`. In case it's n
 10. Log out from PostgreSQL: `# \q`. Then return to the *grader* user: `$ exit`.
 11. Inside the `Start.py`, `lotsofmenus.py`, and `database_setup.py`, the database connection showld be updated with: 
 ```python
-engine = create_engine('postgresql://catalog:sillypassword@localhost/catalog')
+engine = create_engine('postgresql://catalog:udacitypassword@localhost/catalog')
 ```
 12. Setup the database with: `$ python /var/www/catalog/catalog/setup_database.py`.
 13. To prevent potential attacks from the outer world we double check that no remote connections to the database are allowed. Open the following file: `$ sudo nano /etc/postgresql/9.3/main/pg_hba.conf` and edit it, if necessary, to make it look like this: 
