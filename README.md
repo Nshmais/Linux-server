@@ -51,7 +51,7 @@ In order to get newest versions of packages we have to preform the following tas
 5. to get info about the user `$ finger username` 
 - For more info [click here](https://www.digitalocean.com/community/tutorials/how-to-add-and-delete-users-on-ubuntu-16-04)
 
-#### - key authentication for grader user
+#### key authentication for grader user
 1. Generate an encryption key on your local machine with: `$ ssh-keygen -f ~/.ssh/udacity_key.rsa`
 2. Log into the remote VM as root user through ssh and create the following file:` $ touch /home/grader/.ssh/authorized_keys.`
 3. Copy the content of the udacity_key.pub file from your local machine to the `/home/grader/.ssh/authorized_keys` file you just created on the remote VM. Then change some permissions:
@@ -62,11 +62,11 @@ Now you are able to log into the remote VM through ssh with the following comman
 ```
 $ ssh -i ~/.ssh/udacity_key.rsa grader@13.59.231.249
 ```
-#### - Enforce key-based authentication
+#### Enforce key-based authentication
 1. `$ sudo nano /etc/ssh/sshd_config`  Find the *PasswordAuthentication* line and edit it to `no`.
 2. Restart service `$ sudo service ssh restart`
 
-#### - Disable ssh login for *root* user
+#### Disable ssh login for *root* user
 1. `$ sudo nano /etc/ssh/sshd_config`. Find the *PermitRootLogin* line and edit it to `no`.
 2. Restart service `$ sudo service ssh restart`
 
@@ -84,26 +84,7 @@ To check the current timezone use the following command `$ date`. In case it's n
 3. Enable mod_wsgi: `$ sudo a2enmod wsgi`
 4. Start Apache service`$ sudo service apache2 start`
 
-### 7. Install and configure PostgreSQL
-Install PostgreSQL with:
-```
-sudo apt-get install postgresql postgresql-contrib
-```
-To ensure that remote connections to PostgreSQL are not allowed, I checked that the configuration file `/etc/postgresql/9.3/main/pg_hba.conf` only allowed connections from the local host addresses `127.0.0.1` for `IPv4` and `::1` for `IPv6`.
-
-Create a PostgreSQL user called catalog with:
-```
-sudo -u postgres createuser -P catalog
-```
-You are prompted for a password. This creates a normal user that can't create databases, roles (users).
-
-Create an empty database called catalog with:
-```
-sudo -u postgres createdb -O catalog catalog
-```
-For more info [Ubuntu documentation PostgreSQL](https://help.ubuntu.com/community/PostgreSQL)
-
-### 8. Install Git
+### 7. Install Git
  Install Git `sudo apt-get install git`
 #### Clone the Catalog app from Github
  - To clone Restaurants_Catalog project from my github `git clone https://github.com/Nshmais/Restaurants_Catalog`
@@ -116,7 +97,7 @@ For more info [Ubuntu documentation PostgreSQL](https://help.ubuntu.com/communit
     
     from Start import app as application
  ```
-### 9. Install virtual environment, Flask and SQLAlchemy, etc
+### 8. Install virtual environment, Flask and SQLAlchemy, etc
 1. Install pip, the tool for installing Python packages: `$ sudo apt-get install python-pip`
 2. If virtualenv is not installed, use pip to install it using the following command: `$ sudo pip install virtualenv`
 3. Move to the catalog folder: $ cd /var/www/catalog. Then create a new virtual environment with the following command: 
@@ -125,8 +106,7 @@ For more info [Ubuntu documentation PostgreSQL](https://help.ubuntu.com/communit
 5. Install Flask: `$ pip install Flask bleach httplib2 request oauth2client sqlalchemy`
 6. Install all the other project's dependencies: `$ pip install psycopg2`
 
-### 10 Configure and enable a new virtual host
-
+### 9. Configure and enable a new virtual host
 1. Create a virtual host conifg file: `$ sudo nano /etc/apache2/sites-available/catalog.conf`
 2. Paste in the following lines of code:
 ```
@@ -155,8 +135,7 @@ For more info [Ubuntu documentation PostgreSQL](https://help.ubuntu.com/communit
 3. Enable the new virtual host: `$ sudo a2ensite catalog`
 - for more info [click here](https://www.digitalocean.com/community/tutorials/how-to-run-django-with-mod_wsgi-and-apache-with-a-virtualenv-python-environment-on-a-debian-vps)
 
-### 11. Install and configure PostgreSQL
-
+### 10. Install and configure PostgreSQL
 1. Install some necessary Python packages for working with PostgreSQL: `$ sudo apt-get install libpq-dev python-dev`.
 2. Install PostgreSQL: `$ sudo apt-get install postgresql postgresql-contrib`.
 3. Postgres is automatically creating a new user during its installation, whose name is 'postgres'. That is a tusted user who can access the database software. So let's change the user with: `$ sudo su - postgres`, then connect to the database system with `$ psql`.
@@ -182,10 +161,10 @@ host    all             all             ::1/128                 md5
 Source: [DigitalOcean](https://www.digitalocean.com/community/tutorials/how-to-secure-postgresql-on-an-ubuntu-vps).
 
 
-### 12. Update OAuth authorized JavaScript origins
+### 11. Update OAuth authorized JavaScript origins
 1. To let users correctly log-in change the authorized URI to [http://ec2-52-34-208-247.us-west-2.compute.amazonaws.com/](http://ec2-52-34-208-247.us-west-2.compute.amazonaws.com/) on both Google and Facebook developer dashboards.
 
-### 13. Restart Apache to launch the app
+### 12. Restart Apache to launch the app
  `$ sudo service apache2 restart`.
 
 ## License
