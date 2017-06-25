@@ -50,11 +50,28 @@ $ ssh username@127.0.0.1 -p 2200 -i ~/.ssh/key
 - The firewall should be active. For more info [click here](https://help.ubuntu.com/community/UFW)
 
 ### 4. New User Configuration
-- `$ sudo adduser username` to add a new user to VM, just substitute the actual username with the username (**username is placeholder in the code**).
-- `$ finger username` to get info about the user.
-- `$ usermod -aG sudo grader` add the user to superuser (sudo).
-- `$ssh username@127.0.0.1 -p 2222 -i ~/.ssh/key` to login to VM for the user (username/ localhost IP address/ port/ key).
+1. Log into Amazon EC2 instance: `$ ssh ubuntu@13.59.231.249`
+2. Add a new user **grader**: `$ sudo adduser grader`
+3. Create a new file under the suoders directory: `$ sudo nano /etc/sudoers.d/grader` 
+4. Fill that file with the following line of text: `grader ALL=(ALL:ALL) ALL` and save it.
+5. to get info about the user `$ finger username` 
 - For more info [click here](https://www.digitalocean.com/community/tutorials/how-to-add-and-delete-users-on-ubuntu-16-04)
+
+#### key authentication for grader user
+1. Generate an encryption key on your local machine with: `$ ssh-keygen -f ~/.ssh/udacity_key.rsa`
+2. Log into the remote VM as root user through ssh and create the following file:` $ touch /home/grader/.ssh/authorized_keys.`
+3. Copy the content of the udacity_key.pub file from your local machine to the `/home/grader/.ssh/authorized_keys` file you just created on the remote VM. Then change some permissions:
+`$ sudo chmod 700 /home/grader/.ssh`
+` sudo chmod 644 /home/grader/.ssh/authorized_keys`
+Finally change the owner from root to grader: `$ sudo chown -R grader:grader /home/grader/.ssh`
+Now you are able to log into the remote VM through ssh with the following command: 
+```
+$ ssh -i ~/.ssh/udacity_key.rsa grader@13.59.231.249
+```
+
+#### Enforce key-based authentication
+1. `$ sudo nano /etc/ssh/sshd_config`  Find the PasswordAuthentication line and edit it to `no`.
+2. Restart service `$ sudo service ssh restart`
 
 ###5. Timezone UTC
 To check the current timezone use the following command `$ date`. In case it's not UTC, here is the command to do so:
