@@ -13,7 +13,7 @@ SSH port: 2200
 URL: http://ec2-13-59-231-249.us-east-2.compute.amazonaws.com     
 
 ## 🤖 Step by step process
-Create an instance in Amazon EC2. Log into Amazon EC2 instance with your IP adress and key if setup `$ ssh ubuntu@ec2-13-59-231-249.us-east-2.compute.amazonaws.com -i amazon2.pem', now follow these steps to deploy your app to the server.
+Create an instance in Amazon EC2. Log into Amazon EC2 instance with your IP adress and key if setup `$ ssh ubuntu@ec2-13-59-231-249.us-east-2.compute.amazonaws.com -i amazon2.pem`, now follow these steps to deploy your app to the server.
 
 ### 1.  Update or Installed Packages
 In order to get newest versions of packages we have to preform the following tasks in order:
