@@ -12,7 +12,7 @@ SSH port: 2200
 
 URL: http://ec2-13-59-231-249.us-east-2.compute.amazonaws.com     
 
-##Step by step process
+## Step by step process
 
 ### 1.  Update or Installed Packages
 In order to get newest versions of packages we have to preform the following tasks in order:
@@ -23,20 +23,14 @@ In order to get newest versions of packages we have to preform the following tas
 4. `$ sudo apt-get install packagename` to download any other packages.
 
 ### 2. Change the SSH port from 22 to 2200
-Edit the file `$ nano /etc/ssh/sshd_config` and change **Port 22** to **Port 2200**
+1. Edit the file `$ nano /etc/ssh/sshd_config` and change **Port 22** to **Port 2200**
 ```diff
 # what ports, IPs and protocols we listen for
 - Port 22
 + Port 2200
 ```
-Then restart the SSH service:
-```
-$ sudo service ssh restart
-```
-Will now change the command to login to the server:
-```
-$ ssh username@127.0.0.1 -p 2200 -i ~/.ssh/key
-```
+2. Then restart the SSH service:`$ sudo service ssh restart`
+- Will now change the command to login to the server:`$ ssh username@127.0.0.1 -p 2200 -i ~/.ssh/key`
 
 ### 3. Configure the Uncomplicated Firewall (UFW) 
 1. By default, block all incoming connections on all ports: `$ sudo ufw default deny incoming`
@@ -62,30 +56,29 @@ $ ssh username@127.0.0.1 -p 2200 -i ~/.ssh/key
 2. Log into the remote VM as root user through ssh and create the following file:` $ touch /home/grader/.ssh/authorized_keys.`
 3. Copy the content of the udacity_key.pub file from your local machine to the `/home/grader/.ssh/authorized_keys` file you just created on the remote VM. Then change some permissions:
 `$ sudo chmod 700 /home/grader/.ssh`
-` sudo chmod 644 /home/grader/.ssh/authorized_keys`
+`$ sudo chmod 644 /home/grader/.ssh/authorized_keys`
 Finally change the owner from root to grader: `$ sudo chown -R grader:grader /home/grader/.ssh`
 Now you are able to log into the remote VM through ssh with the following command: 
 ```
 $ ssh -i ~/.ssh/udacity_key.rsa grader@13.59.231.249
 ```
-
 #### - Enforce key-based authentication
-1. `$ sudo nano /etc/ssh/sshd_config`  Find the PasswordAuthentication line and edit it to `no`.
+1. `$ sudo nano /etc/ssh/sshd_config`  Find the *PasswordAuthentication* line and edit it to `no`.
 2. Restart service `$ sudo service ssh restart`
+
+#### - Disable ssh login for *root* user
+1. `$ sudo nano /etc/ssh/sshd_config`. Find the *PermitRootLogin* line and edit it to `no`.
+2. Restart service `$ sudo service ssh restart`
+
 
 ### 5. Timezone UTC
 To check the current timezone use the following command `$ date`. In case it's not UTC, here is the command to do so:
-```
-$ sudo timedatectl set-timezone UTC
-```
-or open time configuration dialog and set it to UTC with:
-```
-sudo dpkg-reconfigure tzdata
-```
+`$ sudo timedatectl set-timezone UTC`
+
+**or** open time configuration dialog and set it to UTC with:`$ sudo dpkg-reconfigure tzdata`
 - For more info [click here](https://www.digitalocean.com/community/tutorials/how-to-set-up-timezone-and-ntp-synchronization-on-ubuntu-14-04-quickstart)
 
 ### 6. Install and configure Apache to serve a Python mod_wsgi application
-
 1. Install Apache: `$ sudo apt-get install apache2`
 2. Install *mod_wsgi*: `$ sudo apt-get install libapache2-mod-wsgi python-dev`
 3. Enable mod_wsgi: `$ sudo a2enmod wsgi`
@@ -115,31 +108,85 @@ For more info [Ubuntu documentation PostgreSQL](https://help.ubuntu.com/communit
 #### Clone the Catalog app from Github
  - To clone Restaurants_Catalog project from my github `git clone https://github.com/Nshmais/Restaurants_Catalog`
  - Make a catalog.wsgi file to serve the application over the mod_wsgi. That file should look like this:
- ```
-    catalog.wsgi
-    <BEGIN>
+ ```python
     import sys
     import logging
     logging.basicConfig(stream=sys.stderr)
     sys.path.insert(0, "/var/www/catalog/")
-
+    
     from Start import app as application
-    <END>
  ```
+### 9. Install virtual environment, Flask and SQLAlchemy, etc
+1. Install pip, the tool for installing Python packages: `$ sudo apt-get install python-pip`
+2. If virtualenv is not installed, use pip to install it using the following command: `$ sudo pip install virtualenv`
+3. Move to the catalog folder: $ cd /var/www/catalog. Then create a new virtual environment with the following command: 
+`$ sudo virtualenv venv`
+4. Activate the virtual environment: `$ source venv/bin/activate`
+5. Install Flask: `$ pip install Flask bleach httplib2 request oauth2client sqlalchemy`
+6. Install all the other project's dependencies: `$ pip install psycopg2`
 
-### 9. Install Flask, SQLAlchemy, etc
-Issue the following commands:
+### 10 Configure and enable a new virtual host
+
+1. Create a virtual host conifg file: `$ sudo nano /etc/apache2/sites-available/catalog.conf`
+2. Paste in the following lines of code:
 ```
-sudo apt-get install python-psycopg2 python-flask
-sudo apt-get install python-sqlalchemy python-pip
-sudo pip install oauth2client
-sudo pip install requests
-sudo pip install httplib2
-sudo pip install flask-seasurf
+<VirtualHost *:80>
+    ServerName 13.59.231.249
+    ServerAlias http://ec2-13-59-231-249.us-east-2.compute.amazonaws.com
+    ServerAdmin admin@13.59.231.249
+    WSGIDaemonProcess catalog python-path=/var/www/catalog:/var/www/catalog/venv/lib/python2.7/site-packages
+    WSGIProcessGroup catalog
+    WSGIScriptAlias / /var/www/catalog/catalog.wsgi
+    <Directory /var/www/catalog/>
+        Order allow,deny
+        Allow from all
+    </Directory>
+    Alias /static /var/www/catalog/template
+    <Directory /var/www/catalog/template>
+        Order allow,deny
+        Allow from all
+    </Directory>
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    LogLevel warn
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
 ```
+- The WSGIDaemonProcess line specifies what Python to use and can save you from a big headache. In this case we are explicitly saying to use the virtual environment and its packages to run the application.
+3. Enable the new virtual host: `$ sudo a2ensite catalog`
+- for more info [click here](https://www.digitalocean.com/community/tutorials/how-to-run-django-with-mod_wsgi-and-apache-with-a-virtualenv-python-environment-on-a-debian-vps)
+
+### 11. Install and configure PostgreSQL
+
+1. Install some necessary Python packages for working with PostgreSQL: `$ sudo apt-get install libpq-dev python-dev`.
+2. Install PostgreSQL: `$ sudo apt-get install postgresql postgresql-contrib`.
+3. Postgres is automatically creating a new user during its installation, whose name is 'postgres'. That is a tusted user who can access the database software. So let's change the user with: `$ sudo su - postgres`, then connect to the database system with `$ psql`.
+4. Create a new user called 'catalog' with his password: `# CREATE USER catalog WITH PASSWORD 'sillypassword';`.
+5. Give *catalog* user the CREATEDB capability: `# ALTER USER catalog CREATEDB;`.
+6. Create the 'catalog' database owned by *catalog* user: `# CREATE DATABASE catalog WITH OWNER catalog;`.
+7. Connect to the database: `# \c catalog`.
+8. Revoke all rights: `# REVOKE ALL ON SCHEMA public FROM public;`.
+9. Lock down the permissions to only let *catalog* role create tables: `# GRANT ALL ON SCHEMA public TO catalog;`.
+10. Log out from PostgreSQL: `# \q`. Then return to the *grader* user: `$ exit`.
+11. Inside the Flask application, the database connection is now performed with: 
+```python
+engine = create_engine('postgresql://catalog:sillypassword@localhost/catalog')
+```
+12. Setup the database with: `$ python /var/www/catalog/catalog/setup_database.py`.
+13. To prevent potential attacks from the outer world we double check that no remote connections to the database are allowed. Open the following file: `$ sudo nano /etc/postgresql/9.3/main/pg_hba.conf` and edit it, if necessary, to make it look like this: 
+```
+local   all             postgres                                peer
+local   all             all                                     peer
+host    all             all             127.0.0.1/32            md5
+host    all             all             ::1/128                 md5
+```
+Source: [DigitalOcean](https://www.digitalocean.com/community/tutorials/how-to-secure-postgresql-on-an-ubuntu-vps).
 
 
+### 12. Update OAuth authorized JavaScript origins
+1. To let users correctly log-in change the authorized URI to [http://ec2-52-34-208-247.us-west-2.compute.amazonaws.com/](http://ec2-52-34-208-247.us-west-2.compute.amazonaws.com/) on both Google and Facebook developer dashboards.
 
+### 13. Restart Apache to launch the app
+ `$ sudo service apache2 restart`.
 
 ## License
 This `Linux-server` project is a released under the [MIT License](https://opensource.org/licenses/MIT)
