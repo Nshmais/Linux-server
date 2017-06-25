@@ -13,7 +13,7 @@ SSH port: 2200
 URL: http://ec2-13-59-231-249.us-east-2.compute.amazonaws.com     
 
 ## 🤖 Step by step process
-Create an instance in Amazon EC2. Log into Amazon EC2 instance with your IP adress and key if setup `$ ssh ubuntu@13.59.231.249`, now follow these steps to deploy your app to the server.
+Create an instance in Amazon EC2. Log into Amazon EC2 instance with your IP adress and key if setup `$ ssh ubuntu@ec2-13-59-231-249.us-east-2.compute.amazonaws.com -i amazon2.pem', now follow these steps to deploy your app to the server.
 
 ### 1.  Update or Installed Packages
 In order to get newest versions of packages we have to preform the following tasks in order:
@@ -58,10 +58,9 @@ In order to get newest versions of packages we have to preform the following tas
 `$ sudo chmod 700 /home/grader/.ssh`
 `$ sudo chmod 644 /home/grader/.ssh/authorized_keys`
 Finally change the owner from root to grader: `$ sudo chown -R grader:grader /home/grader/.ssh`
-Now you are able to log into the remote VM through ssh with the following command: 
-```
-$ ssh -i ~/.ssh/udacity_key.rsa grader@13.59.231.249
-```
+Now you are able to log into the remote VM through ssh 
+**Or** if yor create your key from amazon just download it and log in `ssh grader@ec2-13-59-231-249.us-east-2.compute.amazonaws.com -i amazon2.pem`
+
 #### Enforce key-based authentication
 1. `$ sudo nano /etc/ssh/sshd_config`  Find the *PasswordAuthentication* line and edit it to `no`.
 2. Restart service `$ sudo service ssh restart`
