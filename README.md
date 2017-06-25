@@ -164,10 +164,10 @@ Source: [DigitalOcean](https://www.digitalocean.com/community/tutorials/how-to-s
 
 
 ### 11. Update OAuth authorized JavaScript origins
-1. To let users correctly log-in change the authorized URI to [http://ec2-52-34-208-247.us-west-2.compute.amazonaws.com/](http://ec2-52-34-208-247.us-west-2.compute.amazonaws.com/) on both Google and Facebook developer dashboards.
+1. To let users correctly log-in change the authorized URI to http://ec2-13-59-231-249.us-east-2.compute.amazonaws.com on Google dashboards and edit the auth file to allow the origin and redirect to the new adress.
 
 ### 12. Restart Apache to launch the app
- `$ sudo service apache2 restart`.
+Restart Apache service `$ sudo service apache2 restart` and check the web adress.
 
 ## License
 This `Linux-server` project is a released under the [MIT License](https://opensource.org/licenses/MIT)
