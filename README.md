@@ -39,14 +39,14 @@ $ ssh username@127.0.0.1 -p 2200 -i ~/.ssh/key
 ```
 
 ### 3. Configure the Uncomplicated Firewall (UFW) 
-- By default, block all incoming connections on all ports: `$ sudo ufw default deny incoming`
-- Allow outgoing connection on all ports: `$ sudo ufw default allow outgoing`
-- Allow incoming connection for SSH on port 2200: `$ sudo ufw allow 2200/tcp`
-- Allow incoming connections for HTTP on port 80: `$ sudo ufw allow www`
-- Allow incoming connection for NTP on port 123: `$ sudo ufw allow ntp`
-- To check the rules that have been added before enabling the firewall use: `$ sudo ufw show added`
-- To enable the firewall, use: `$ sudo ufw enable`
-- To check the status of the firewall, use: `$ sudo ufw status`
+1. By default, block all incoming connections on all ports: `$ sudo ufw default deny incoming`
+2. Allow outgoing connection on all ports: `$ sudo ufw default allow outgoing`
+3. Allow incoming connection for SSH on port 2200: `$ sudo ufw allow 2200/tcp`
+4. Allow incoming connections for HTTP on port 80: `$ sudo ufw allow www`
+5. Allow incoming connection for NTP on port 123: `$ sudo ufw allow ntp`
+6. To check the rules that have been added before enabling the firewall use: `$ sudo ufw show added`
+7. To enable the firewall, use: `$ sudo ufw enable`
+8. To check the status of the firewall, use: `$ sudo ufw status`
 - The firewall should be active. For more info [click here](https://help.ubuntu.com/community/UFW)
 
 ### 4. New User Configuration
@@ -57,7 +57,7 @@ $ ssh username@127.0.0.1 -p 2200 -i ~/.ssh/key
 5. to get info about the user `$ finger username` 
 - For more info [click here](https://www.digitalocean.com/community/tutorials/how-to-add-and-delete-users-on-ubuntu-16-04)
 
-#### key authentication for grader user
+#### - key authentication for grader user
 1. Generate an encryption key on your local machine with: `$ ssh-keygen -f ~/.ssh/udacity_key.rsa`
 2. Log into the remote VM as root user through ssh and create the following file:` $ touch /home/grader/.ssh/authorized_keys.`
 3. Copy the content of the udacity_key.pub file from your local machine to the `/home/grader/.ssh/authorized_keys` file you just created on the remote VM. Then change some permissions:
@@ -69,11 +69,11 @@ Now you are able to log into the remote VM through ssh with the following comman
 $ ssh -i ~/.ssh/udacity_key.rsa grader@13.59.231.249
 ```
 
-#### Enforce key-based authentication
+#### - Enforce key-based authentication
 1. `$ sudo nano /etc/ssh/sshd_config`  Find the PasswordAuthentication line and edit it to `no`.
 2. Restart service `$ sudo service ssh restart`
 
-###5. Timezone UTC
+### 5. Timezone UTC
 To check the current timezone use the following command `$ date`. In case it's not UTC, here is the command to do so:
 ```
 $ sudo timedatectl set-timezone UTC
@@ -82,18 +82,14 @@ or open time configuration dialog and set it to UTC with:
 ```
 sudo dpkg-reconfigure tzdata
 ```
-For more info [click here](https://www.digitalocean.com/community/tutorials/how-to-set-up-timezone-and-ntp-synchronization-on-ubuntu-14-04-quickstart)
+- For more info [click here](https://www.digitalocean.com/community/tutorials/how-to-set-up-timezone-and-ntp-synchronization-on-ubuntu-14-04-quickstart)
 
 ### 6. Install and configure Apache to serve a Python mod_wsgi application
 
-Install Apache:
-```
-sudo apt-get install apache2
-```
-Install the libapache2-mod-wsgi package:
-```
-sudo apt-get install libapache2-mod-wsgi
-```
+1. Install Apache: `$ sudo apt-get install apache2`
+2. Install *mod_wsgi*: `$ sudo apt-get install libapache2-mod-wsgi python-dev`
+3. Enable mod_wsgi: `$ sudo a2enmod wsgi`
+4. Start Apache service`$ sudo service apache2 start`
 
 ### 7. Install and configure PostgreSQL
 Install PostgreSQL with:
@@ -115,9 +111,21 @@ sudo -u postgres createdb -O catalog catalog
 For more info [Ubuntu documentation PostgreSQL](https://help.ubuntu.com/community/PostgreSQL)
 
 ### 8. Install Git
-`sudo apt-get install git`
-To clone Restaurants_Catalog project from my github
-`git clone https://github.com/Nshmais/Restaurants_Catalog`
+ Install Git `sudo apt-get install git`
+#### Clone the Catalog app from Github
+ - To clone Restaurants_Catalog project from my github `git clone https://github.com/Nshmais/Restaurants_Catalog`
+ - Make a catalog.wsgi file to serve the application over the mod_wsgi. That file should look like this:
+ ```
+    catalog.wsgi
+    <BEGIN>
+    import sys
+    import logging
+    logging.basicConfig(stream=sys.stderr)
+    sys.path.insert(0, "/var/www/catalog/")
+
+    from Start import app as application
+    <END>
+ ```
 
 ### 9. Install Flask, SQLAlchemy, etc
 Issue the following commands:
@@ -129,48 +137,9 @@ sudo pip install requests
 sudo pip install httplib2
 sudo pip install flask-seasurf
 ```
-## Amazon Lightsail
-##### 1. Log in!
-First, log in to Lightsail. If you don't already have an Amazon Web Services account, you'll be prompted to create one.
 
-<img src="img/amazon1.png" width="350"> 
 
-##### 2. Create an instance.
-Once you're logged in, Lightsail will give you a friendly message with a robot on it, prompting you to create an instance. A Lightsail instance is a Linux server running on a virtual machine inside an Amazon datacenter.
 
-<img src="img/amazon2.png" width="350"> 
-
-##### 3. Choose an instance image: Ubuntu
-Lightsail supports a lot of different instance types. An instance image is a particular software setup, including an operating system and optionally built-in applications. For this project, you'll want a plain Ubuntu Linux image. There are two settings to make here:
-  A. First, choose "OS Only" (rather than "Apps + OS"). 
-  B. Second, choose Ubuntu as the operating system.
-
-<img src="img/amazon3.png" width="350"> 
-
-##### 4. Choose your instance plan.
-The instance plan controls how powerful of a server you get. It also controls how much money they want to charge you. For this project, $5 (first month free) instance is just fine.
-
-<img src="img/amazon4.png" width="350"> 
-
-##### 5. Give your instance a hostname.
-Every instance needs a unique hostname. You can use any name you like, as long as it doesn't have spaces or unusual characters in it. Your instance's name will be visible to you and to the project reviewer.
-
-<img src="img/amazon5.png" width="350"> 
-
-##### 6. Wait for it to start up.
-It may take a few seconds/minutes for your instance to start up.
-
-<img src="img/amazon6.png" width="350">
-
-<img src="img/amazon7.png" width="350"> 
-
-##### 7. Running instance
-Once your instance has started up, you can log into it with SSH from computer.`ssh Ubuntu@()ip_address` you can leave the port part off if its defult 22 or if you change it you have to mention it `ssh Ubuntu@()ip_address -p port_number` 
-The public IP address of the instance is displayed along with its name. In the above picture it's 54.84.49.254. The DNS name of this instance is ec2-54-84-49-254.compute-1.amazonaws.com.
-
-<img src="img/amazon8.png" width="350"> 
-
-<img src="img/amazon9.png" width="350"> 
 
 ## License
 This `Linux-server` project is a released under the [MIT License](https://opensource.org/licenses/MIT)
