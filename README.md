@@ -169,5 +169,9 @@ Source: [DigitalOcean](https://www.digitalocean.com/community/tutorials/how-to-s
 ### 12. Restart Apache to launch the app
 Restart Apache service `$ sudo service apache2 restart` and check the web adress.
 
+###  Third Party Resources
+[unix.stackexchange](https://unix.stackexchange.com/questions/38978/where-are-apache-file-access-logs-stored)
+[iliketomatoes](https://github.com/iliketomatoes)
+
 ## License
 This `Linux-server` project is a released under the [MIT License](https://opensource.org/licenses/MIT)
