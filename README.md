@@ -163,7 +163,7 @@ host    all             all             ::1/128                 md5
 Source: [DigitalOcean](https://www.digitalocean.com/community/tutorials/how-to-secure-postgresql-on-an-ubuntu-vps).
 
 
-### 11. Update OAuth authorized JavaScript origins
+### 11. Update OAuth origins and redirect 
 1. To let users correctly log-in change the authorized URI to http://ec2-13-59-231-249.us-east-2.compute.amazonaws.com on Google dashboards and edit the auth file to allow the origin and redirect to the new adress.
 
 ### 12. Restart Apache to launch the app
