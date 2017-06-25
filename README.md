@@ -171,7 +171,7 @@ Restart Apache service `$ sudo service apache2 restart` and check the web adress
 
 ###  Third Party Resources
 here are some helpful pages and resources in creating this project or solve bugs
-[unix.stackexchange](https://unix.stackexchange.com/questions/38978/where-are-apache-file-access-logs-stored)
+[unix.stackexchange](https://unix.stackexchange.com/questions/38978/where-are-apache-file-access-logs-stored),
 [iliketomatoes](https://github.com/iliketomatoes)
 
 ## License
