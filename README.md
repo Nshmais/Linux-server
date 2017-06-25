@@ -146,7 +146,7 @@ To check the current timezone use the following command `$ date`. In case it's n
 8. Revoke all rights: `# REVOKE ALL ON SCHEMA public FROM public;`.
 9. Lock down the permissions to only let *catalog* role create tables: `# GRANT ALL ON SCHEMA public TO catalog;`.
 10. Log out from PostgreSQL: `# \q`. Then return to the *grader* user: `$ exit`.
-11. Inside the Flask application, the database connection is now performed with: 
+11. Inside the `Start.py`, `lotsofmenus.py`, and `database_setup.py`, the database connection showld be updated with: 
 ```python
 engine = create_engine('postgresql://catalog:sillypassword@localhost/catalog')
 ```
