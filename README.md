@@ -13,11 +13,10 @@ SSH port: 2200
 URL: http://ec2-13-59-231-249.us-east-2.compute.amazonaws.com     
 
 ## 🤖 Step by step process
-Create an instance in Amazon EC2. Log into Amazon EC2 instance with your IP adress and key if setup `$ ssh ubuntu@ec2-13-59-231-249.us-east-2.compute.amazonaws.com -i amazon2.pem`, now follow these steps to deploy your app to the server.
+Create an instance in Amazon EC2. Log into Amazon EC2 instance with your IP adress and key if setup, now the follow these steps will guide to deploy the app to the server.
 
 ### 1.  Update or Installed Packages
 In order to get newest versions of packages we have to preform the following tasks in order:
-
 1. `$ sudo apt-get update` to downloads the package lists from the repositories and "updates" them to get information on the newest versions of packages and their dependencies.
 2. `$ sudo apt-get upgrade` to fetch new versions of packages existing on the machine if APT knows about these new versions.
 3. `$ sudo apt-get autoremove` to remove leftover dependencies of packages you no longer have.
@@ -31,7 +30,7 @@ In order to get newest versions of packages we have to preform the following tas
 + Port 2200
 ```
 2. Then restart the SSH service:`$ sudo service ssh restart`
-- Will now change the command to login to the server:`$ ssh username@127.0.0.1 -p 2200 -i ~/.ssh/key`
+- Will now change the command to login to the server:`$ ssh grader@ec2-13-59-231-249.us-east-2.compute.amazonaws.com -p 2200 -i amazon2.pem`
 
 ### 3. Configure the Uncomplicated Firewall (UFW) 
 1. By default, block all incoming connections on all ports: `$ sudo ufw default deny incoming`
@@ -59,7 +58,11 @@ In order to get newest versions of packages we have to preform the following tas
 `$ sudo chmod 644 /home/grader/.ssh/authorized_keys`
 Finally change the owner from root to grader: `$ sudo chown -R grader:grader /home/grader/.ssh`
 Now you are able to log into the remote VM through ssh 
-**Or** if yor create your key from amazon just download it and log in `ssh grader@ec2-13-59-231-249.us-east-2.compute.amazonaws.com -i amazon2.pem`
+**Or**
+if create your key from amazon just download it and log in 
+```
+   ssh grader@ec2-13-59-231-249.us-east-2.compute.amazonaws.com -i amazon2.pem
+```
 
 #### Enforce key-based authentication
 1. `$ sudo nano /etc/ssh/sshd_config`  Find the *PasswordAuthentication* line and edit it to `no`.
